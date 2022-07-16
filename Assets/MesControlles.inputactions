@@ -1,0 +1,33 @@
+{
+    "name": "MesControlles",
+    "maps": [
+        {
+            "name": "MonControlleur",
+            "id": "a5c2f9b9-a25b-442d-868e-99af848e2cb6",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "2e052991-70d4-4b1b-a193-7faa5f0a6568",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4aed06ef-213f-4fb7-bc8e-d914675d6341",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
