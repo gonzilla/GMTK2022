@@ -20,6 +20,7 @@ public class MouvementGestion : MesFonctions
     public float ForceSaut;
 
     [SerializeField] float ToleranceUnder;
+    [SerializeField] float TempsImobilisationAtterrir;
     float Direction;
     float vitesseActuel;
     Rigidbody2D Rb;
@@ -40,7 +41,12 @@ public class MouvementGestion : MesFonctions
     }
     public void SetDirection(float newDirection ) 
     {
+        if (EtatDeDeplacement == MesEtats.Immobile && newDirection!=0)
+        {
+            SetState(MesEtats.Marche);
+        }
         Direction = newDirection;
+
     }
     #region state
     public void SetState(MesEtats NewState) 
@@ -97,6 +103,11 @@ public class MouvementGestion : MesFonctions
     void Immobile() 
     {
         vitesseActuel = 0;
+        if (Direction!=0)
+        {
+            Invoke("marche", TempsImobilisationAtterrir);
+        }
+
     }
 
 
@@ -106,6 +117,7 @@ public class MouvementGestion : MesFonctions
         if (collision.GetContact(0).point.y<transform.position.y-ToleranceUnder)
         {
             IsGrounded = true;
+            SetState(MesEtats.Immobile);
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
