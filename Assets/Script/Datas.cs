@@ -6,6 +6,7 @@ public class Datas : MonoBehaviour
 {
     public static Datas LesDatas;
     public Transform Player;
+    public Camera MainCam;
     private void Awake()
     {
         if (LesDatas!=this)
