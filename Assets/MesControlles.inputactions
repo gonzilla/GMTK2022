@@ -28,6 +28,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ThrowSword",
+                    "type": "Button",
+                    "id": "d1036266-9b3e-4430-aa63-ec854f18f23b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -85,6 +93,17 @@
                     "action": "throughPlatform",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23bee90e-21b1-4f79-a4d4-26a58cbe4b09",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Clavier",
+                    "action": "ThrowSword",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -96,6 +115,11 @@
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

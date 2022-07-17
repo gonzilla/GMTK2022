@@ -21,6 +21,8 @@ public class MouvementGestion : MesFonctions
 
     [SerializeField] float ToleranceUnder;
     [SerializeField] float TempsImobilisationAtterrir;
+    [SerializeField] GameObject PlatformCurrent;
+    PlatformScript forreset;
     float Direction;
     float vitesseActuel;
     Rigidbody2D Rb;
@@ -47,6 +49,16 @@ public class MouvementGestion : MesFonctions
         }
         Direction = newDirection;
 
+    }
+    public void PassThroughPlatform() 
+    {
+        if (PlatformCurrent!=null)
+        {
+            PlatformEffector2D maPlat = PlatformCurrent.GetComponent<PlatformEffector2D>();
+            maPlat.rotationalOffset = 180;
+        }
+        
+        
     }
     #region state
     public void SetState(MesEtats NewState) 
@@ -118,10 +130,38 @@ public class MouvementGestion : MesFonctions
         {
             IsGrounded = true;
             SetState(MesEtats.Immobile);
+            if (collision.transform.CompareTag("Platform"))
+            {
+                PlatformCurrent = collision.transform.gameObject;
+                if (PlatformCurrent.transform == Datas.LesDatas.Lance)
+                {
+                    PlatformCurrent = PlatformCurrent.transform.GetChild(0).gameObject;
+                }
+                if (!PlatformCurrent.GetComponent<PlatformScript>())
+                {
+                    forreset = PlatformCurrent.transform.gameObject.AddComponent<PlatformScript>();
+                }
+                else 
+                {
+                    forreset = PlatformCurrent.GetComponent<PlatformScript>();
+                }
+               
+            }
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
+        print(collision.transform.name);
+        if (collision.transform.CompareTag("Platform"))
+        {
+            PlatformCurrent = null;
+            if (forreset!=null)
+            {
+                forreset.resetMe();
+                forreset = null;
+            }
+           
+        }
         
     }
 

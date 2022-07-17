@@ -36,4 +36,9 @@ public class MesFonctions : MonoBehaviour
         return (Point - Origin).normalized;
 
     }
+
+    public static GestionScriptsLance gestionLance(Transform LaLance) 
+    {
+        return LaLance.GetComponent<GestionScriptsLance>();
+    }
 }

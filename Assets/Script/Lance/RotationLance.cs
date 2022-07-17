@@ -5,39 +5,47 @@ using UnityEngine;
 public class RotationLance : MesFonctions
 {
 
-    public enum StateSword 
-    {
-    Epee,
-    Lance,
-    Platform
-    }
-    public StateSword MonEtat;
-    public bool Throwed;
+    
+    
+    
 
     public float SpeedRotationLance;
 
     Camera maincam;
 
-    private void Start()
+    GestionScriptsLance LesScriptsLances;
+
+    Quaternion BaseRotation;
+    void Start()
     {
+        LesScriptsLances = gestionLance(this.transform);
         maincam = Datas.LesDatas.MainCam;
+        BaseRotation = transform.rotation;
     }
+    
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 Direction = maincam.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        float angle = Mathf.Atan2(Direction.y, Direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, SpeedRotationLance * Time.deltaTime);
+        
+        if (LesScriptsLances.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.PreparationThrow)
+        {
+            Vector2 Direction = maincam.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            float angle = Mathf.Atan2(Direction.y, Direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, SpeedRotationLance * Time.deltaTime);
+        }
+        
+        
         
        
     }
-
-    public void Throw() 
+    public void ResetRotation() 
     {
+        transform.rotation = BaseRotation;
     
-
-
     }
+
+   
+    
 }

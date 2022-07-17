@@ -7,6 +7,7 @@ public class GestionInput : MesFonctions
 {
     PlayerInput PI;
     GestionScript GS;
+    bool throwForBool;
     void Start()
     {
         PI = GetComponent<PlayerInput>();
@@ -29,6 +30,38 @@ public class GestionInput : MesFonctions
 
     public void ThroughPlatform(InputAction.CallbackContext context)
     {
+        if (context.started)
+        {
+            GS.MouvementGestion.PassThroughPlatform();
+        }
+    }
 
+    public void ThrowSword(InputAction.CallbackContext context) 
+    {
+
+        if (context.started)
+        {
+
+            GS.ScriptsLance.ThrowLanceScript.PrepareThrow();
+        }
+        if (context.canceled)
+        {
+            GS.ScriptsLance.ThrowLanceScript.Throw();
+        }
+        
+        
+    
+    }
+    public void attaque(InputAction.CallbackContext context) 
+    {
+        if (context.started)
+        {
+
+            GS.ScriptsLance.LesAttaques.determineAttack(true);
+        }
+        if (context.canceled)
+        {
+            GS.ScriptsLance.LesAttaques.determineAttack(false);
+        }
     }
 }
