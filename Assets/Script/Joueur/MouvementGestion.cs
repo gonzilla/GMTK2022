@@ -28,6 +28,7 @@ public class MouvementGestion : MesFonctions
     float vitesseActuel;
     Rigidbody2D Rb;
     GestionScript MaGestion;
+    SpriteRenderer MonSprite;
     Vector3 Hauteur;
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,7 @@ public class MouvementGestion : MesFonctions
         Rb = GetComponent<Rigidbody2D>();
         vitesseActuel = VitessePersoPdtMarche;
         MaGestion = FindGestionScript(this.transform);
+        MonSprite = GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
@@ -64,9 +66,11 @@ public class MouvementGestion : MesFonctions
             if (newDirection == 1)
             {
                 Right = true;
+                MonSprite.flipX = false;
             }
             else if (newDirection == -1)
             {
+                MonSprite.flipX = true;
                 Right = false;
             }
             MaGestion.GestionDushield.shield.setDirection(Right);

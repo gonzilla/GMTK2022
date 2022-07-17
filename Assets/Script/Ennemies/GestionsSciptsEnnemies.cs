@@ -5,4 +5,6 @@ using UnityEngine;
 public class GestionsSciptsEnnemies : MesFonctions
 {
     public EnnemieLife MaVie;
+    public EnnemieIA MonIA;
+
 }
