@@ -8,6 +8,7 @@ public class ThrowLance : MesFonctions
     public float ForceBack;
     public float RangeMax;
     public float DelayPlant;
+    public Vector2 AngleForModif;
     [SerializeField] float snap;
 
     Vector3 DirectionThrow;
@@ -66,7 +67,10 @@ public class ThrowLance : MesFonctions
         {
             if (LesScriptsLances.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.InWall)
             {
-
+                if (transform.localScale.y==-1)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
                 BoxCollider2D temp = this.transform.GetChild(0).GetComponent<BoxCollider2D>();
                 temp.usedByEffector = false;
                 temp.isTrigger = true;
@@ -94,7 +98,10 @@ public class ThrowLance : MesFonctions
         temp.isTrigger = false;
         this.transform.GetChild(0).gameObject.AddComponent<PlatformEffector2D>();
         this.transform.gameObject.tag = "Platform";
-
+        if (transform.rotation.eulerAngles.z>AngleForModif.x & transform.rotation.eulerAngles.z < AngleForModif.y)
+        {
+            transform.localScale = new Vector3(1, -1, 1);
+        }
 
     }
 

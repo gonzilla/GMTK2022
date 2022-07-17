@@ -8,4 +8,5 @@ public class GestionScript : MonoBehaviour
     public GestionInput GestionInput;
     public GestionScriptsLance ScriptsLance;
     public GestionShield GestionDushield;
+    public lifeplayer Life;
 }

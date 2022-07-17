@@ -20,6 +20,10 @@ public class PlatformScript : MesFonctions
     }
     void reseet() 
     {
-        GetComponent<PlatformEffector2D>().rotationalOffset = 0;
+        if (GetComponent<PlatformEffector2D>())
+        {
+            GetComponent<PlatformEffector2D>().rotationalOffset = 0;
+        }
+        
     }
 }

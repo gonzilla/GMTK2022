@@ -56,7 +56,7 @@ public class GestionInput : MesFonctions
     {
         if (context.started)
         {
-            print("attaqeu");
+            
             GS.ScriptsLance.LesAttaques.PrepareAttack(true);
         }
         if (context.canceled)

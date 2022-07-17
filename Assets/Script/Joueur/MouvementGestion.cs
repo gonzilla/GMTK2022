@@ -17,6 +17,7 @@ public class MouvementGestion : MesFonctions
     public bool IsGrounded;
     public float VitessePersoPdtMarche;
     public float VitessePersoPdtCourse;
+    public float VitessePersoPdtSaut;
     public float ForceSaut;
     public bool Right;
     [SerializeField] float ToleranceUnder;
@@ -40,11 +41,15 @@ public class MouvementGestion : MesFonctions
     }
     private void Update()
     {
-
-        if (EtatDeDeplacement!= MesEtats.Tombe && EtatDeDeplacement!=MesEtats.Saute)
+        Rb.velocity = new Vector3(Direction * vitesseActuel, Rb.velocity.y, 0);
+        /*if (EtatDeDeplacement!= MesEtats.Tombe && EtatDeDeplacement!=MesEtats.Saute)
         {
             Rb.velocity = new Vector3(Direction*vitesseActuel,Rb.velocity.y,0);
         }
+        if (EtatDeDeplacement == MesEtats.Tombe && EtatDeDeplacement == MesEtats.Saute)
+        {
+            Rb.velocity = new Vector3(Direction * VitessePersoPdtSaut, Rb.velocity.y, 0);
+        }*/
         if (EtatDeDeplacement == MesEtats.Saute && Hauteur.y>transform.position.y)
         {
             SetState(MesEtats.Tombe);
@@ -63,6 +68,7 @@ public class MouvementGestion : MesFonctions
             {
                 SetState(MesEtats.Marche);
             }
+            
             if (newDirection == 1)
             {
                 Right = true;
@@ -79,10 +85,10 @@ public class MouvementGestion : MesFonctions
         if (Datas.LesDatas.Defending )
         {
             Direction = 0;
-            DirectionVoulue = newDirection;
+           
         }
+        DirectionVoulue = newDirection;
 
-        
 
     }
     public float GetDirectionV() 
@@ -143,7 +149,7 @@ public class MouvementGestion : MesFonctions
 
     void saute() 
     {
-        if (!Datas.LesDatas.Defending)
+        if (!Datas.LesDatas.Defending && IsGrounded)
         {
             Rb.AddForce(Vector2.up * ForceSaut);
             IsGrounded = false;
@@ -162,14 +168,20 @@ public class MouvementGestion : MesFonctions
         if (Direction!=0)
         {
             Invoke("marche", TempsImobilisationAtterrir);
+            
         }
-
+        SetDirection(DirectionVoulue);
     }
 
 
     #endregion
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (EtatDeDeplacement == MesEtats.Saute || EtatDeDeplacement == MesEtats.Tombe)
+        {
+            Direction = 0;
+        }
+       
         if (collision.GetContact(0).point.y<transform.position.y-ToleranceUnder)
         {
             IsGrounded = true;
