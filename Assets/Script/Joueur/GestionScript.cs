@@ -7,4 +7,5 @@ public class GestionScript : MonoBehaviour
     public MouvementGestion MouvementGestion;
     public GestionInput GestionInput;
     public GestionScriptsLance ScriptsLance;
+    public GestionShield GestionDushield;
 }

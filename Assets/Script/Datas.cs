@@ -13,6 +13,8 @@ public class Datas : MonoBehaviour
     public LayerMask Normal;
     public LayerMask Epee;
     public float TimeResetPlat;
+    public bool Defending;
+    
 
     private void Awake()
     {

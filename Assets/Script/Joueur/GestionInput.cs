@@ -56,12 +56,25 @@ public class GestionInput : MesFonctions
     {
         if (context.started)
         {
-
-            GS.ScriptsLance.LesAttaques.determineAttack(true);
+            print("attaqeu");
+            GS.ScriptsLance.LesAttaques.PrepareAttack(true);
         }
         if (context.canceled)
         {
-            GS.ScriptsLance.LesAttaques.determineAttack(false);
+            GS.ScriptsLance.LesAttaques.PrepareAttack(false);
+        }
+    }
+
+    public void Defense(InputAction.CallbackContext context) 
+    {
+        if (context.started)
+        {
+            
+            GS.GestionDushield.shield.StartDefense();
+        }
+        if (context.canceled)
+        {
+            GS.GestionDushield.shield.EndBlock();
         }
     }
 }

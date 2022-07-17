@@ -41,4 +41,9 @@ public class MesFonctions : MonoBehaviour
     {
         return LaLance.GetComponent<GestionScriptsLance>();
     }
+
+    public static GestionsSciptsEnnemies GetEnnemieGestion(Transform Ennemie) 
+    {
+        return Ennemie.GetComponent<GestionsSciptsEnnemies>();
+    }
 }

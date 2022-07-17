@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemieLife : MonoBehaviour
+public class EnnemieLife : MesFonctions
 {
-    // Start is called before the first frame update
+    public float Life;
+    GestionsSciptsEnnemies MesScripts;
     void Start()
     {
-        
+        MesScripts = GetEnnemieGestion(this.transform);
     }
 
     // Update is called once per frame
-    void Update()
+    public void RetireVie(float Aretirer) 
     {
-        
+        Life -= Aretirer;
+        if (Life<=0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

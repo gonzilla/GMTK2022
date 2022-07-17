@@ -18,19 +18,23 @@ public class MouvementGestion : MesFonctions
     public float VitessePersoPdtMarche;
     public float VitessePersoPdtCourse;
     public float ForceSaut;
-
+    public bool Right;
     [SerializeField] float ToleranceUnder;
     [SerializeField] float TempsImobilisationAtterrir;
     [SerializeField] GameObject PlatformCurrent;
     PlatformScript forreset;
     float Direction;
+    float DirectionVoulue;
     float vitesseActuel;
     Rigidbody2D Rb;
+    GestionScript MaGestion;
+    Vector3 Hauteur;
     // Start is called before the first frame update
     void Start()
     {
         Rb = GetComponent<Rigidbody2D>();
         vitesseActuel = VitessePersoPdtMarche;
+        MaGestion = FindGestionScript(this.transform);
     }
     private void Update()
     {
@@ -39,16 +43,47 @@ public class MouvementGestion : MesFonctions
         {
             Rb.velocity = new Vector3(Direction*vitesseActuel,Rb.velocity.y,0);
         }
+        if (EtatDeDeplacement == MesEtats.Saute && Hauteur.y>transform.position.y)
+        {
+            SetState(MesEtats.Tombe);
+        }
+        else if (EtatDeDeplacement == MesEtats.Saute && Hauteur.y < transform.position.y)
+        {
+            Hauteur = transform.position;
+        }
 
     }
     public void SetDirection(float newDirection ) 
     {
-        if (EtatDeDeplacement == MesEtats.Immobile && newDirection!=0)
+        if (!Datas.LesDatas.Defending )
         {
-            SetState(MesEtats.Marche);
+            if (EtatDeDeplacement == MesEtats.Immobile && newDirection != 0)
+            {
+                SetState(MesEtats.Marche);
+            }
+            if (newDirection == 1)
+            {
+                Right = true;
+            }
+            else if (newDirection == -1)
+            {
+                Right = false;
+            }
+            MaGestion.GestionDushield.shield.setDirection(Right);
+            Direction = newDirection;
         }
-        Direction = newDirection;
+        if (Datas.LesDatas.Defending )
+        {
+            Direction = 0;
+            DirectionVoulue = newDirection;
+        }
 
+        
+
+    }
+    public float GetDirectionV() 
+    {
+        return DirectionVoulue;
     }
     public void PassThroughPlatform() 
     {
@@ -63,8 +98,7 @@ public class MouvementGestion : MesFonctions
     #region state
     public void SetState(MesEtats NewState) 
    {
-        if (IsGrounded)
-        {
+        
             EtatDeDeplacement = NewState;
             switch (NewState)
             {
@@ -89,7 +123,8 @@ public class MouvementGestion : MesFonctions
                     break;
                 
             }
-        }
+        
+
    }
 
     void marche() 
@@ -104,8 +139,13 @@ public class MouvementGestion : MesFonctions
 
     void saute() 
     {
-        Rb.AddForce(Vector2.up *ForceSaut);
-        IsGrounded = false;
+        if (!Datas.LesDatas.Defending)
+        {
+            Rb.AddForce(Vector2.up * ForceSaut);
+            IsGrounded = false;
+            Hauteur = transform.position;
+        }
+        
     }
     void Tombe() 
     {
@@ -151,7 +191,7 @@ public class MouvementGestion : MesFonctions
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        print(collision.transform.name);
+        
         if (collision.transform.CompareTag("Platform"))
         {
             PlatformCurrent = null;

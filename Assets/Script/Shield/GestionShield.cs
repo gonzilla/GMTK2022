@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GestionsSciptsEnnemies : MesFonctions
+public class GestionShield : MonoBehaviour
 {
-    public EnnemieLife MaVie;
+    public Shield shield;
 }

@@ -14,7 +14,24 @@ public class GestionCollision : MesFonctions
     {
         if (ScriptsLance.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.Throwed)
         {
-            ScriptsLance.ThrowLanceScript.StartstuckInAWall();
+           
+            if (collision.transform.CompareTag("Ennemies"))
+            {
+                ScriptsLance.ThrowLanceScript.TouchAnEnnemie(collision.gameObject);
+            }
+            else
+            {
+                ScriptsLance.ThrowLanceScript.StartstuckInAWall();
+            }
+        }
+        if (ScriptsLance.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.Attacking)
+        {
+            
+            if (collision.transform.CompareTag("Ennemies"))
+            {
+                
+                ScriptsLance.CoupDepeeScript.AddEnnemies(collision.gameObject);
+            }
         }
         
     }

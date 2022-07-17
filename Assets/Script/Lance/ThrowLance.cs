@@ -14,25 +14,30 @@ public class ThrowLance : MesFonctions
     Vector3 DirectionBack;
     
     GestionScriptsLance LesScriptsLances;
+    GestionScript LesScriptJoueurs;
     void Start()
     {
         LesScriptsLances = gestionLance(this.transform);
+        LesScriptJoueurs = FindGestionScript(Datas.LesDatas.Player);
     }
 
     
     public void PrepareThrow() 
     {
-        if (LesScriptsLances.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.Idle)
+        
+        if (LesScriptsLances.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.Idle && !Datas.LesDatas.Defending)
         {
             LesScriptsLances.GestionEtatLance.SetState(GestionEtatLance.EtatLance.PreparationThrow);
             transform.position = Datas.LesDatas.ThrowParent.position;
             transform.parent = Datas.LesDatas.ThrowParent;
+            LesScriptsLances.LesAttaques.DesableAnimator();
         }
         else if (LesScriptsLances.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.PreparationThrow)
         {
             LesScriptsLances.GestionEtatLance.SetState(GestionEtatLance.EtatLance.Idle);
             transform.position = Datas.LesDatas.CombatParent.position;
             transform.parent = Datas.LesDatas.CombatParent;
+            LesScriptsLances.LesAttaques.DesableAnimator();
         }
         else if (LesScriptsLances.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.Throwed
             || LesScriptsLances.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.InWall)
@@ -93,6 +98,17 @@ public class ThrowLance : MesFonctions
 
     }
 
+    public void TouchAnEnnemie(GameObject Ennemie) 
+    {
+        LesScriptsLances.CoupDepeeScript.ThrowedOnEnnemie(Ennemie);
+        back();
+    }
+    void setAnimator() 
+    {
+        LesScriptsLances.LesAttaques.AbleAnimator();
+        LesScriptsLances.LesAttaques.SetSens(LesScriptJoueurs.MouvementGestion.Right);
+    }
+
     private void Update()
     {
         if (LesScriptsLances.GestionEtatLance.CurrentState == GestionEtatLance.EtatLance.Throwed)
@@ -113,6 +129,7 @@ public class ThrowLance : MesFonctions
                 LesScriptsLances.GestionEtatLance.SetState(GestionEtatLance.EtatLance.Idle);
                 transform.parent = Datas.LesDatas.CombatParent;
                 LesScriptsLances.RotationLance.ResetRotation();
+                setAnimator();
             }
         }
     }

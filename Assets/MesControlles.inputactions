@@ -36,6 +36,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Attaque",
+                    "type": "Button",
+                    "id": "bbb30ed6-8b50-474d-a76f-23566e80abc2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Defend",
+                    "type": "Button",
+                    "id": "02f99019-16ef-4424-b4e7-a14ea9ee441b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -102,6 +118,28 @@
                     "processors": "",
                     "groups": "Clavier",
                     "action": "ThrowSword",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ade7ed7c-245f-4356-bc30-c11baf77d800",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Clavier",
+                    "action": "Attaque",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77889daa-6a19-4da5-92cc-5b14cf221d5c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Clavier",
+                    "action": "Defend",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
